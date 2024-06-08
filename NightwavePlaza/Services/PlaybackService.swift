@@ -17,6 +17,7 @@ import BugfenderSDK
 enum PlaybackQuality: Int {
     case High = 0
     case Eco = 1
+    case Auto = 2
 }
 
 class PlaybackService {
@@ -101,7 +102,18 @@ class PlaybackService {
     }
     
     private func urlForQuality() -> URL {
-        self.quality == .High ? URL(string: "https://radio.plaza.one/mp3")! : URL(string: "https://radio.plaza.one/mp3_low")!
+        let url: String
+        
+        switch self.quality {
+        case .High:
+            url = "https://radio.plaza.one/mp3"
+        case .Eco:
+            url = "https://radio.plaza.one/mp3_low"
+        case .Auto:
+            url = "https://nwp.brich.dev/hls"
+        }
+
+        return URL(string: url)!
     }
     
     @objc private func handleInterruption(notification: NSNotification) {
