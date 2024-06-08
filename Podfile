@@ -31,10 +31,4 @@ target 'NightwavePlaza' do
   
   pod 'NSString-Hash'
 
-  
-  target 'NightwavePlazaTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
 end
