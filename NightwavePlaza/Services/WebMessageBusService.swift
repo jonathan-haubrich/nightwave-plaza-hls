@@ -50,37 +50,33 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         self.delegate?.webBusDidReceiveMessage(message: decoded, completion: {[weak self] (result, error) in
             // TODO: Cleanup this method
             guard let self = self else { return };
-
-            var jsonData = [
+            print("Message.name: \(message.name)")
+            var jsonData: [String: Any?] = [
                 "id": decoded.callbackId
             ]
 
             if let error = error {
                 jsonData["error"] = "'\(error)'"
             } else {
-                jsonData["result"] = self.jsObjectStringFromObject(object: result)
+                jsonData["result"] = result
             }
-            let jsonEncodedData = self.jsObjectStringFromObject(object: jsonData);
-            print("jsonEncodedData: \(jsonEncodedData)")
-            let jsMessage = "window['emitter'].emit(\(jsonEncodedData)); 'ok'; "
-            self.webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
-//                print("Callback Result: \(String(describing: res))")
-                if err != nil {
-                    print("Unable to send js message: \(jsMessage). Error = \(String(describing: err))")
-                } else {
-//                    print("Return value called: \(jsMessage)");
-                }
-            });
+
+            self.sendMessage(name: "iosCallback", data: jsonData)
         });
         
     }
     
     func sendMessage(name: String, data: Any?) {
-
         let dataString = self.jsObjectStringFromObject(object: data)
+        var jsMessage: String
+        if dataString == "undefined" {
+            jsMessage = "window['emitter'].emit('\(name)', \(data!)); 'ok'; "
+        } else {
+            jsMessage = "window['emitter'].emit('\(name)', '\(dataString)'); 'ok'; "
+        }
         
-        let jsMessage = "window['emitter'].emit('\(name)', '\(dataString)'); 'ok'; "
-        print("Sending a message. Name=\(name). Data=\(dataString)")
+        print("Sending message: \(jsMessage)")
+
         webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
             print("Send Message Result: \(String(describing: res)), error = \(String(describing: err))")
         })
@@ -91,15 +87,20 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
             guard let object = object else {
                 return "undefined";
             }
+
             if let str = object as? String {
-                return str;
+                return str
             }
-            let jsonData = try JSONSerialization.data(withJSONObject: object, options: [])
-            return String(data: jsonData, encoding: .utf8)!
+
+            if(JSONSerialization.isValidJSONObject(object))
+            {
+                let jsonData = try JSONSerialization.data(withJSONObject: object, options: [])
+                return String(data: jsonData, encoding: .utf8)!
+            } else {
+                return "undefined"
+            }
         } catch {
-            return "undefined";
+            return "undefined"
         }
     }
-    
-    
 }

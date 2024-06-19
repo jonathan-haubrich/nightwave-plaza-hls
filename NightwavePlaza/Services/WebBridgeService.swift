@@ -110,10 +110,16 @@ class WebBridgeService: NSObject, WebBusDelegate {
             completion(nil, nil)
           }
         } else if message.name == "audioPlay" {
-            self.playback.play()
-            completion(nil, nil)
+            if(self.playback.paused) {
+                self.playback.play()
+            } else {
+                self.playback.pause()
+            }
+            self.webBus.sendMessage(name: "isPlaying", data: !self.playback.paused)
+            completion(!self.playback.paused, nil)
         } else if message.name == "audioStop" {
             self.playback.pause()
+            self.webBus.sendMessage(name: "isPlaying", data: "false")
             completion(nil, nil)
         } else if message.name == "setSleepTimer" {
             if let timeInMinutes = Double(message.args[0]) {
