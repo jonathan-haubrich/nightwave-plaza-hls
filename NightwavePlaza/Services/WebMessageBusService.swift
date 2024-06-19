@@ -50,12 +50,19 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         self.delegate?.webBusDidReceiveMessage(message: decoded, completion: {[weak self] (result, error) in
             // TODO: Cleanup this method
             guard let self = self else { return };
-            var errorMessage = "undefined";
+
+            var jsonData = [
+                "id": decoded.callbackId
+            ]
+
             if let error = error {
-                errorMessage = "'\(error)'";
+                jsonData["error"] = "'\(error)'"
+            } else {
+                jsonData["result"] = self.jsObjectStringFromObject(object: result)
             }
-            let resultValue = self.jsObjectStringFromObject(object: result);
-            let jsMessage = "window['ios-callback']['\(decoded.callbackId)'](\(resultValue), \(errorMessage)); 'ok'; "
+            let jsonEncodedData = self.jsObjectStringFromObject(object: jsonData);
+            print("jsonEncodedData: \(jsonEncodedData)")
+            let jsMessage = "window['emitter'].emit(\(jsonEncodedData)); 'ok'; "
             self.webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
 //                print("Callback Result: \(String(describing: res))")
                 if err != nil {
@@ -72,7 +79,7 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
 
         let dataString = self.jsObjectStringFromObject(object: data)
         
-        let jsMessage = "window['plaza'].push('\(name)', \(dataString)); 'ok'; "
+        let jsMessage = "window['emitter'].emit('\(name)', '\(dataString)'); 'ok'; "
 //        print("Sending a message. Name=\(name). Data=\(dataString)")
         webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
 //            print("Send Message Result: \(String(describing: res)), error = \(String(describing: err))")

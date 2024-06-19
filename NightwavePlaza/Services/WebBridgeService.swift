@@ -51,9 +51,9 @@ class WebBridgeService: NSObject, WebBusDelegate {
         
         startMenuHandler.setup(inViewController: viewController, onSelect: { action in
             if (action == "user-favorites" || action == "user") && AuthStorage.getKey() == "" {
-                self.webBus.sendMessage(name: "openWindow", data: [ "window": "user-login" ])
+                self.webBus.sendMessage(name: "openWindow", data: "user-login")
             } else {
-                self.webBus.sendMessage(name: "openWindow", data: [ "window": action ])
+                self.webBus.sendMessage(name: "openWindow", data: action)
             }
         })
         
@@ -115,9 +115,13 @@ class WebBridgeService: NSObject, WebBusDelegate {
         } else if message.name == "audioStop" {
             self.playback.pause()
             completion(nil, nil)
-        } else if message.name == "openDrawer" {
-            self.startMenuHandler.show()
+        } else if message.name == "setSleepTimer" {
+            if let timeInMinutes = Double(message.args[0]) {
+                self.sleepTimer.sleepAfter(minutes: timeInMinutes)
+            }
             completion(nil, nil)
+            self.sendCurrentStatus()
+
         } else if message.name == "getAuthToken" {
             if let token = AuthStorage.getKey() {
                 completion("'\(token)'", nil)
@@ -135,6 +139,11 @@ class WebBridgeService: NSObject, WebBusDelegate {
                 viewController?.backgroundView.setUrl(url: url)
             }
             completion(nil, nil)
+        } else if message.name == "setAudioQuality" {
+            if let qualityInt = Int(message.args[0]), let quality = PlaybackQuality(rawValue: qualityInt) {
+                playback.quality = quality
+            }
+            completion("\(playback.quality.rawValue)", nil)
         } else if message.name == "getUserAgent" {
             completion("'NightwavePlaza iOS App'", nil)
         } else if message.name == "toggleFullscreen" {
@@ -143,6 +152,9 @@ class WebBridgeService: NSObject, WebBusDelegate {
                        animations: {
                         self.viewController?.setNeedsStatusBarAppearanceUpdate()
                    })
+            completion(nil, nil)
+        } else if message.name == "openDrawer" {
+            self.startMenuHandler.show()
             completion(nil, nil)
         } else if message.name == "getAppVersion" {
             let dictionary = Bundle.main.infoDictionary!
@@ -155,19 +167,6 @@ class WebBridgeService: NSObject, WebBusDelegate {
         }
         else if message.name == "getAudioQuality" {
             completion("\(playback.quality.rawValue)", nil)
-        }
-        else if message.name == "setAudioQuality" {
-            if let qualityInt = Int(message.args[0]), let quality = PlaybackQuality(rawValue: qualityInt) {
-                playback.quality = quality
-            }
-            completion("\(playback.quality.rawValue)", nil)
-        }
-        else if message.name == "setSleepTimer" {
-            if let timeInMinutes = Double(message.args[0]) {
-                self.sleepTimer.sleepAfter(minutes: timeInMinutes)
-            }
-            completion(nil, nil)
-            self.sendCurrentStatus()
         }
         else if message.name == "getReaction" {
             

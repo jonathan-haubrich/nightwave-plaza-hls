@@ -75,6 +75,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     
     func setupWebView() {
+        webView.configuration.preferences.setValue(true, forKey: "allowFileAccessFromFileURLs")
         self.view.addSubview(webView);
         webView.autoPinEdgesToSuperviewEdges()
         webView.isOpaque = false
