@@ -39,7 +39,7 @@ class PlaybackService {
     
     var playbackRate$ = BehaviorSubject<Float>(value: 0)
     
-    var player = AVPlayer(url: URL(string: "https://radio.plaza.one/mp3")!)
+    var player = AVPlayer(url: URL(string: "https://radio.plaza.one/hls")!)
     
     let reachability = try! Reachability()
     
@@ -101,7 +101,16 @@ class PlaybackService {
     }
     
     private func urlForQuality() -> URL {
-        self.quality == .High ? URL(string: "https://radio.plaza.one/mp3")! : URL(string: "https://radio.plaza.one/mp3_low")!
+        let streamUrl: String
+        if(self.quality == .High) {
+            streamUrl = "https://radio.plaza.one/hls"
+        } else {
+            streamUrl = "https://radio.plaza.one/aac_lofi.m3u8"
+        }
+
+        print("Setting stream URL to: \(streamUrl)")
+
+        return URL(string: streamUrl)!
     }
     
     @objc private func handleInterruption(notification: NSNotification) {

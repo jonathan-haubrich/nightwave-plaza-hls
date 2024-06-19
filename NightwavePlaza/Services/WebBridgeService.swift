@@ -140,7 +140,11 @@ class WebBridgeService: NSObject, WebBusDelegate {
             }
             completion(nil, nil)
         } else if message.name == "setAudioQuality" {
-            if let qualityInt = Int(message.args[0]), let quality = PlaybackQuality(rawValue: qualityInt) {
+            print("Message args: \(message.args)")
+            // refactor playback.quality to boolean?
+            // qualityInt represents lowQuality
+            let qualityInt = message.args[0] == "true" ? 1 : 0
+            if let quality = PlaybackQuality(rawValue: qualityInt) {
                 playback.quality = quality
             }
             completion("\(playback.quality.rawValue)", nil)
