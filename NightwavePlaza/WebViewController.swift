@@ -174,8 +174,5 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         }
 
     }
-
-
-    
 }
 

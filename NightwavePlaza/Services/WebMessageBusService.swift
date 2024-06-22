@@ -50,7 +50,6 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         self.delegate?.webBusDidReceiveMessage(message: decoded, completion: {[weak self] (result, error) in
             // TODO: Cleanup this method
             guard let self = self else { return };
-            print("Message.name: \(message.name)")
             var jsonData: [String: Any?] = [
                 "id": decoded.callbackId
             ]
@@ -66,21 +65,17 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         
     }
     
-    func sendMessage(name: String, data: Any?, raw: Bool = false) {
+    func sendMessage(name: String, data: Any?) {
         // iosCallback messages get JSON.parse'd so data is emitted as a string
         // others like isPlaying and isBuffering don't JSON.parse, so we send raw values
-        var jsonString = self.jsObjectStringFromObject(object: data)
-
-        if(!raw) {
-            jsonString = "'\(jsonString)'"
-        }
+        let jsonString = self.jsObjectStringFromObject(object: data)
 
         let jsMessage = "window['emitter'].emit('\(name)', \(jsonString)); 'ok'; "
 
-        print("Sending message: \(jsMessage)")
+        //print("Sending message: \(jsMessage)")
 
         webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
-            print("Send Message Result: \(String(describing: res)), error = \(String(describing: err))")
+            //print("Send Message Result: \(String(describing: res)), error = \(String(describing: err))")
         })
     }
     
@@ -98,12 +93,13 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         }
 
         if let data = try? JSONSerialization.data(withJSONObject: object!, options: []) {
-            if let string = String(data: data, encoding: .utf8) {
+            if var string = String(data: data, encoding: .utf8) {
                 // song title's with single quotes break the JSON string when emitting
-                return string.replacingOccurrences(of: "'", with: "\\'")
+                string = string.replacingOccurrences(of: "'", with: "\\'")
+                return "'\(string)'"
             }
         }
 
-        return "undefined"
+        return "\"undefined\""
     }
 }

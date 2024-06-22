@@ -26,7 +26,7 @@ class PlaybackService {
     var quality: PlaybackQuality {
         set {
             qualityStorage?.save(NSNumber(integerLiteral: newValue.rawValue))
-            self.replacePlayerForQuality()
+            replacePlayerForQuality()
         }
         get {
             if let storedQuality = qualityStorage?.getObject() as? NSNumber, let quality = PlaybackQuality.init(rawValue: storedQuality.intValue) {
@@ -46,11 +46,11 @@ class PlaybackService {
     private var lastPlayTime: CMTime?
 
     init() {
-        self.setupPlaybackSession()
-        self.setupRemoteTransportControls()
+        setupPlaybackSession()
+        setupRemoteTransportControls()
 
-        self.replacePlayerForQuality()
-        self.resumePlaybackWhenBecomeReachable()
+        replacePlayerForQuality()
+        resumePlaybackWhenBecomeReachable()
 
         NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption(notification:)), name: AVAudioSession.interruptionNotification, object: nil)
     }
@@ -59,7 +59,7 @@ class PlaybackService {
     func resumePlaybackWhenBecomeReachable() {
         
         reachability.whenReachable = { [unowned self] reachability in
-            self.replacePlayerForQuality()
+            replacePlayerForQuality()
         }
         
         do {
@@ -71,44 +71,40 @@ class PlaybackService {
     }
     
     func play() {
-        if let lastTime = self.lastPlayTime, CMTimeCompare(player.currentTime(), lastTime) == 0 {
+        if let lastTime = lastPlayTime, CMTimeCompare(player.currentTime(), lastTime) == 0 {
             // If player stalled, reload player
-            self.replacePlayerForQuality()
+            replacePlayerForQuality()
         }
         
         player.play()
-        self.playbackRate$.onNext(player.rate)
-        self.lastPlayTime = player.currentTime()
+        playbackRate$.onNext(player.rate)
+        lastPlayTime = player.currentTime()
     }
     
     func pause() {
         player.pause()
-        self.playbackRate$.onNext(player.rate)
-        self.lastPlayTime = player.currentTime()
+        playbackRate$.onNext(player.rate)
+        lastPlayTime = player.currentTime()
     }
     
     var paused: Bool {
         get {
-            return self.player.timeControlStatus == AVPlayer.TimeControlStatus.paused
+            return player.timeControlStatus == AVPlayer.TimeControlStatus.paused
         }
     }
     
     func replacePlayerForQuality() {
-        let rate = self.player.rate;
-        self.player.pause()
-        self.player = AVPlayer(url: self.urlForQuality())
-        self.player.rate = rate
+        let item = AVPlayerItem(url: urlForQuality())
+        player.replaceCurrentItem(with: item)
     }
     
     private func urlForQuality() -> URL {
         let streamUrl: String
-        if(self.quality == .High) {
+        if quality == .High {
             streamUrl = "https://radio.plaza.one/hls"
         } else {
             streamUrl = "https://radio.plaza.one/aac_lofi.m3u8"
         }
-
-        print("Setting stream URL to: \(streamUrl)")
 
         return URL(string: streamUrl)!
     }
@@ -119,18 +115,18 @@ class PlaybackService {
             let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
             let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue) else {
                 print("Unable to parse interruptionType")
-                self.pause()
+                pause()
                 return
         }
     
         switch interruptionType {
         case .began:
-            self.pause()
+            pause()
         case .ended:
             guard let optionsValue = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt else { return }
             let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
             if options.contains(.shouldResume) {
-                self.play()
+                play()
             } else {
                 print("Should NOT resume a playback")
                 // Interruption ended. Playback should not resume.
@@ -169,16 +165,16 @@ class PlaybackService {
         let commandCenter = MPRemoteCommandCenter.shared()
         
         commandCenter.playCommand.addTarget { [unowned self] event in
-            if self.player.rate == 0.0 {
-                self.play()
+            if player.rate == 0.0 {
+                play()
                 return .success
             }
             return .commandFailed
         }
         
         commandCenter.pauseCommand.addTarget { [unowned self] event in
-            if self.player.rate == 1.0 {
-                self.pause()
+            if player.rate == 1.0 {
+                pause()
                 return .success
             }
             return .commandFailed

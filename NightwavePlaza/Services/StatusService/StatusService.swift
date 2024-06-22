@@ -68,7 +68,7 @@ class StatusService: NSObject {
                     Bugfender.error("Error while getting status: \(error)")
                     observer.onError(error)
                 }
-                print("Received new status from backend!")
+                //print("Received new status from backend!")
                 observer.onCompleted()
             }
             return Disposables.create {

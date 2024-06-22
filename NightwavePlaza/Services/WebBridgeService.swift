@@ -31,6 +31,8 @@ class WebBridgeService: NSObject, WebBusDelegate {
     
     private var startMenuHandler = StartMenuHandler()
     
+    private var timeControlStatusObserver: NSKeyValueObservation?
+
     func setup(
         webView: WKWebView,
         statusService: StatusService,
@@ -62,11 +64,24 @@ class WebBridgeService: NSObject, WebBusDelegate {
     
     func bindEvents() {
         webBus.delegate = self;
-        
-        
+
         playback.playbackRate$.subscribe({ [unowned self] (event) in
             self.sendCurrentStatus()
         }).disposed(by: disposeBag)
+
+        timeControlStatusObserver = playback.player.observe(\AVPlayer.timeControlStatus, options: [.new, .old]) { [unowned self] player, change in
+
+            switch(player.timeControlStatus) {
+            case AVPlayer.TimeControlStatus.paused:
+                webBus.sendMessage(name: "isPlaying", data: false)
+            case AVPlayer.TimeControlStatus.playing:
+                webBus.sendMessage(name: "isPlaying", data: true)
+            case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
+                webBus.sendMessage(name: "isBuffering", data: true)
+            @unknown default:
+                print("Unhandled unknown TimeControlStatus")
+            }
+        }
         
         statusService.status$.subscribe { [unowned self] (event) in
             if let status = event.element as? Status {
@@ -90,11 +105,11 @@ class WebBridgeService: NSObject, WebBusDelegate {
                
            }
        }).disposed(by: disposeBag)
-        
-        
-        
     }
     
+    deinit {
+        timeControlStatusObserver?.invalidate()
+    }
     
     func webBusDidReceiveMessage(message: WebMessage, completion: @escaping (Any?, String?) -> Void) {
         
@@ -110,16 +125,14 @@ class WebBridgeService: NSObject, WebBusDelegate {
             completion(nil, nil)
           }
         } else if message.name == "audioPlay" {
-            if(self.playback.paused) {
+            if self.playback.paused {
                 self.playback.play()
             } else {
                 self.playback.pause()
             }
-            self.webBus.sendMessage(name: "isPlaying", data: !self.playback.paused, raw: true)
             completion(nil, nil)
         } else if message.name == "audioStop" {
             self.playback.pause()
-            self.webBus.sendMessage(name: "isPlaying", data: "false")
             completion(nil, nil)
         } else if message.name == "setSleepTimer" {
             if let timeInMinutes = Double(message.args[0]) {
@@ -146,7 +159,6 @@ class WebBridgeService: NSObject, WebBusDelegate {
             }
             completion(nil, nil)
         } else if message.name == "setAudioQuality" {
-            print("Message args: \(message.args)")
             // refactor playback.quality to boolean?
             // qualityInt represents lowQuality
             let qualityInt = message.args[0] == "true" ? 1 : 0
@@ -296,7 +308,4 @@ class WebBridgeService: NSObject, WebBusDelegate {
         preferences: preferences,
         delegate: nil)
     }
-    
-    
-    
 }
