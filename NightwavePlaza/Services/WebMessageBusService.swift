@@ -56,7 +56,7 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
             ]
 
             if let error = error {
-                jsonData["error"] = "'\(error)'"
+                jsonData["error"] = "\(error)"
             } else {
                 jsonData["result"] = result
             }
@@ -66,15 +66,17 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
         
     }
     
-    func sendMessage(name: String, data: Any?) {
-        let dataString = self.jsObjectStringFromObject(object: data)
-        var jsMessage: String
-        if dataString == "undefined" {
-            jsMessage = "window['emitter'].emit('\(name)', \(data!)); 'ok'; "
-        } else {
-            jsMessage = "window['emitter'].emit('\(name)', '\(dataString)'); 'ok'; "
+    func sendMessage(name: String, data: Any?, raw: Bool = false) {
+        // iosCallback messages get JSON.parse'd so data is emitted as a string
+        // others like isPlaying and isBuffering don't JSON.parse, so we send raw values
+        var jsonString = self.jsObjectStringFromObject(object: data)
+
+        if(!raw) {
+            jsonString = "'\(jsonString)'"
         }
-        
+
+        let jsMessage = "window['emitter'].emit('\(name)', \(jsonString)); 'ok'; "
+
         print("Sending message: \(jsMessage)")
 
         webView?.evaluateJavaScript(jsMessage, completionHandler: { (res, err) in
@@ -83,24 +85,25 @@ class WebMessageBus: NSObject, WKScriptMessageHandler {
     }
     
     func jsObjectStringFromObject(object: Any?) -> String {
-        do {
-            guard let object = object else {
-                return "undefined";
-            }
 
-            if let str = object as? String {
-                return str
-            }
-
-            if(JSONSerialization.isValidJSONObject(object))
-            {
-                let jsonData = try JSONSerialization.data(withJSONObject: object, options: [])
-                return String(data: jsonData, encoding: .utf8)!
-            } else {
-                return "undefined"
-            }
-        } catch {
-            return "undefined"
+        switch  object {
+        case is String:
+            return "\"\(object as! String)\""
+        case is Bool:
+            return "\(object as! Bool)"
+        case .none:
+            return "null"
+        default:
+            break
         }
+
+        if let data = try? JSONSerialization.data(withJSONObject: object!, options: []) {
+            if let string = String(data: data, encoding: .utf8) {
+                // song title's with single quotes break the JSON string when emitting
+                return string.replacingOccurrences(of: "'", with: "\\'")
+            }
+        }
+
+        return "undefined"
     }
 }

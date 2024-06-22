@@ -115,8 +115,8 @@ class WebBridgeService: NSObject, WebBusDelegate {
             } else {
                 self.playback.pause()
             }
-            self.webBus.sendMessage(name: "isPlaying", data: !self.playback.paused)
-            completion(!self.playback.paused, nil)
+            self.webBus.sendMessage(name: "isPlaying", data: !self.playback.paused, raw: true)
+            completion(nil, nil)
         } else if message.name == "audioStop" {
             self.playback.pause()
             self.webBus.sendMessage(name: "isPlaying", data: "false")
@@ -155,7 +155,7 @@ class WebBridgeService: NSObject, WebBusDelegate {
             }
             completion("\(playback.quality.rawValue)", nil)
         } else if message.name == "getUserAgent" {
-            completion("'NightwavePlaza iOS App'", nil)
+            completion("NightwavePlaza iOS App", nil)
         } else if message.name == "toggleFullscreen" {
             self.viewController?.fullScreen = !(self.viewController?.fullScreen ?? true)
             UIView.animate(withDuration: 0.5,
