@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		1423C062E6237B5ECBCD415F /* Pods_NightwavePlazaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A51012A0A3FBB1E50EB8492A /* Pods_NightwavePlazaTests.framework */; };
+		794BE5192C275F3200BC8708 /* ComponentsHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8453085B26403C2D00A6AA73 /* ComponentsHub.framework */; };
+		794BE51C2C275F5600BC8708 /* ComponentsHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8453085B26403C2D00A6AA73 /* ComponentsHub.framework */; };
 		933DA3AF9F6C2A968A6B5170 /* RequestToGetStatus.response.json in Resources */ = {isa = PBXBuildFile; fileRef = 9043FCADF85B8DB664F713DF /* RequestToGetStatus.response.json */; };
 		BEB913665039D0E3E6C53ECA /* Pods_NightwavePlaza.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4221990D687A9AC1A612E781 /* Pods_NightwavePlaza.framework */; };
 		FA0605D0250E463D001C3C46 /* LastFmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0605CF250E463D001C3C46 /* LastFmService.swift */; };
@@ -246,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794BE5192C275F3200BC8708 /* ComponentsHub.framework in Frameworks */,
 				BEB913665039D0E3E6C53ECA /* Pods_NightwavePlaza.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +257,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794BE51C2C275F5600BC8708 /* ComponentsHub.framework in Frameworks */,
 				1423C062E6237B5ECBCD415F /* Pods_NightwavePlazaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,24 +318,24 @@
 		8453084526403C2C00A6AA73 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8453085B26403C2D00A6AA73 /* ComponentsHub */,
-				8453085D26403C2D00A6AA73 /* Differentiator */,
-				8453085F26403C2D00A6AA73 /* FastCoding */,
-				8453086126403C2D00A6AA73 /* GestureRecognizerClosures */,
-				8453086326403C2D00A6AA73 /* libextobjc */,
-				8453086526403C2D00A6AA73 /* NSString-Hash */,
-				8453086726403C2D00A6AA73 /* Pods-NightwavePlaza */,
-				8453086926403C2D00A6AA73 /* Pods-NightwavePlazaTests */,
-				8453086B26403C2D00A6AA73 /* PureLayout */,
-				8453086D26403C2D00A6AA73 /* ReachabilitySwift */,
-				8453086F26403C2D00A6AA73 /* RxBiBinding */,
-				8453087126403C2D00A6AA73 /* RxCocoa */,
-				8453087326403C2D00A6AA73 /* RxDataSources */,
-				8453087526403C2D00A6AA73 /* RxRelay */,
-				8453087726403C2D00A6AA73 /* RxSwift */,
-				8453087926403C2D00A6AA73 /* SAMKeychain */,
-				8453087B26403C2D00A6AA73 /* TRCAPIClient */,
-				8453087D26403C2D00A6AA73 /* TyphoonRestClient */,
+				8453085B26403C2D00A6AA73 /* ComponentsHub.framework */,
+				8453085D26403C2D00A6AA73 /* Differentiator.framework */,
+				8453085F26403C2D00A6AA73 /* FastCoding.framework */,
+				8453086126403C2D00A6AA73 /* GestureRecognizerClosures.framework */,
+				8453086326403C2D00A6AA73 /* libextobjc.framework */,
+				8453086526403C2D00A6AA73 /* NSString_Hash.framework */,
+				8453086726403C2D00A6AA73 /* Pods_NightwavePlaza.framework */,
+				8453086926403C2D00A6AA73 /* Pods_NightwavePlazaTests.framework */,
+				8453086B26403C2D00A6AA73 /* PureLayout.framework */,
+				8453086D26403C2D00A6AA73 /* Reachability.framework */,
+				8453086F26403C2D00A6AA73 /* RxBiBinding.framework */,
+				8453087126403C2D00A6AA73 /* RxCocoa.framework */,
+				8453087326403C2D00A6AA73 /* RxDataSources.framework */,
+				8453087526403C2D00A6AA73 /* RxRelay.framework */,
+				8453087726403C2D00A6AA73 /* RxSwift.framework */,
+				8453087926403C2D00A6AA73 /* SAMKeychain.framework */,
+				8453087B26403C2D00A6AA73 /* TRCAPIClient.framework */,
+				8453087D26403C2D00A6AA73 /* TyphoonRestClient.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -517,8 +521,8 @@
 				FA0FFD502479B55F00C58CFE /* Sources */,
 				FA0FFD512479B55F00C58CFE /* Frameworks */,
 				FA0FFD522479B55F00C58CFE /* Resources */,
-				5DF1DDDAB75F1528AE92CC31 /* [CP] Embed Pods Frameworks */,
 				F43FEBE5E46363347EC38A4E /* Headers */,
+				5D37671B537E214157DE9D66 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -594,146 +598,128 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		8453085B26403C2D00A6AA73 /* ComponentsHub */ = {
+		8453085B26403C2D00A6AA73 /* ComponentsHub.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = ComponentsHub;
 			path = ComponentsHub.framework;
 			remoteRef = 8453085A26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453085D26403C2D00A6AA73 /* Differentiator */ = {
+		8453085D26403C2D00A6AA73 /* Differentiator.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = Differentiator;
 			path = Differentiator.framework;
 			remoteRef = 8453085C26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453085F26403C2D00A6AA73 /* FastCoding */ = {
+		8453085F26403C2D00A6AA73 /* FastCoding.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = FastCoding;
 			path = FastCoding.framework;
 			remoteRef = 8453085E26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086126403C2D00A6AA73 /* GestureRecognizerClosures */ = {
+		8453086126403C2D00A6AA73 /* GestureRecognizerClosures.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = GestureRecognizerClosures;
 			path = GestureRecognizerClosures.framework;
 			remoteRef = 8453086026403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086326403C2D00A6AA73 /* libextobjc */ = {
+		8453086326403C2D00A6AA73 /* libextobjc.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = libextobjc;
 			path = libextobjc.framework;
 			remoteRef = 8453086226403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086526403C2D00A6AA73 /* NSString-Hash */ = {
+		8453086526403C2D00A6AA73 /* NSString_Hash.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = "NSString-Hash";
 			path = NSString_Hash.framework;
 			remoteRef = 8453086426403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086726403C2D00A6AA73 /* Pods-NightwavePlaza */ = {
+		8453086726403C2D00A6AA73 /* Pods_NightwavePlaza.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = "Pods-NightwavePlaza";
 			path = Pods_NightwavePlaza.framework;
 			remoteRef = 8453086626403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086926403C2D00A6AA73 /* Pods-NightwavePlazaTests */ = {
+		8453086926403C2D00A6AA73 /* Pods_NightwavePlazaTests.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = "Pods-NightwavePlazaTests";
 			path = Pods_NightwavePlazaTests.framework;
 			remoteRef = 8453086826403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086B26403C2D00A6AA73 /* PureLayout */ = {
+		8453086B26403C2D00A6AA73 /* PureLayout.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = PureLayout;
 			path = PureLayout.framework;
 			remoteRef = 8453086A26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086D26403C2D00A6AA73 /* ReachabilitySwift */ = {
+		8453086D26403C2D00A6AA73 /* Reachability.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = ReachabilitySwift;
 			path = Reachability.framework;
 			remoteRef = 8453086C26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453086F26403C2D00A6AA73 /* RxBiBinding */ = {
+		8453086F26403C2D00A6AA73 /* RxBiBinding.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = RxBiBinding;
 			path = RxBiBinding.framework;
 			remoteRef = 8453086E26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087126403C2D00A6AA73 /* RxCocoa */ = {
+		8453087126403C2D00A6AA73 /* RxCocoa.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = RxCocoa;
 			path = RxCocoa.framework;
 			remoteRef = 8453087026403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087326403C2D00A6AA73 /* RxDataSources */ = {
+		8453087326403C2D00A6AA73 /* RxDataSources.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = RxDataSources;
 			path = RxDataSources.framework;
 			remoteRef = 8453087226403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087526403C2D00A6AA73 /* RxRelay */ = {
+		8453087526403C2D00A6AA73 /* RxRelay.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = RxRelay;
 			path = RxRelay.framework;
 			remoteRef = 8453087426403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087726403C2D00A6AA73 /* RxSwift */ = {
+		8453087726403C2D00A6AA73 /* RxSwift.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = RxSwift;
 			path = RxSwift.framework;
 			remoteRef = 8453087626403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087926403C2D00A6AA73 /* SAMKeychain */ = {
+		8453087926403C2D00A6AA73 /* SAMKeychain.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = SAMKeychain;
 			path = SAMKeychain.framework;
 			remoteRef = 8453087826403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087B26403C2D00A6AA73 /* TRCAPIClient */ = {
+		8453087B26403C2D00A6AA73 /* TRCAPIClient.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = TRCAPIClient;
 			path = TRCAPIClient.framework;
 			remoteRef = 8453087A26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		8453087D26403C2D00A6AA73 /* TyphoonRestClient */ = {
+		8453087D26403C2D00A6AA73 /* TyphoonRestClient.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			name = TyphoonRestClient;
 			path = TyphoonRestClient.framework;
 			remoteRef = 8453087C26403C2D00A6AA73 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -787,7 +773,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5DF1DDDAB75F1528AE92CC31 /* [CP] Embed Pods Frameworks */ = {
+		5D37671B537E214157DE9D66 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1028,15 +1014,15 @@
 				CODE_SIGN_ENTITLEMENTS = "NightwavePlaza/Nightwave Plaza.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = PA5C4S9S27;
+				DEVELOPMENT_TEAM = 7LX3YYWWE7;
 				INFOPLIST_FILE = NightwavePlaza/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nightwaveplaza.NightwavePlaza;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.brich.NightwavePlazaHls;
 				PRODUCT_NAME = "Nightwave Plaza";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "NightwavePlaza/Network/NightwavePlaza-Bridging-Header.h";
@@ -1055,15 +1041,15 @@
 				CODE_SIGN_ENTITLEMENTS = "NightwavePlaza/Nightwave Plaza.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = PA5C4S9S27;
+				DEVELOPMENT_TEAM = 7LX3YYWWE7;
 				INFOPLIST_FILE = NightwavePlaza/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.nightwaveplaza.NightwavePlaza;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.brich.NightwavePlazaHls;
 				PRODUCT_NAME = "Nightwave Plaza";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "NightwavePlaza/Network/NightwavePlaza-Bridging-Header.h";
@@ -1076,12 +1062,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B95CDEDCCCFCE1314198CB8F /* Pods-NightwavePlazaTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KKT4KK2FG;
 				INFOPLIST_FILE = NightwavePlazaTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1099,12 +1084,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 308151CC824A698EFD427DE8 /* Pods-NightwavePlazaTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5KKT4KK2FG;
 				INFOPLIST_FILE = NightwavePlazaTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

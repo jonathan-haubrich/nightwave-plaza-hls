@@ -1,10 +1,12 @@
 //
 //  BugfenderSDK.h
 //  BugfenderSDK
-//  Copyright (c) 2014 Bugfender SL. All rights reserved.
+//  Copyright (c) 2014 Bugfender GmbH. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import "BFLogInterceptor.h"
+#import "BFDefaultLogInterceptor.h"
 
 #if TARGET_OS_IOS
 
@@ -79,6 +81,16 @@ NS_ASSUME_NONNULL_BEGIN
 #define BFLibraryVersionNumber_1_10_1  62
 #define BFLibraryVersionNumber_1_10_2  63
 #define BFLibraryVersionNumber_1_10_3  64
+#define BFLibraryVersionNumber_1_10_4  65
+#define BFLibraryVersionNumber_1_10_5  66
+#define BFLibraryVersionNumber_1_10_6  67
+#define BFLibraryVersionNumber_1_11_0  68
+#define BFLibraryVersionNumber_1_12_0  69
+#define BFLibraryVersionNumber_1_12_1  70
+#define BFLibraryVersionNumber_1_12_2  71
+#define BFLibraryVersionNumber_1_13_0  72
+#define BFLibraryVersionNumber_1_13_1  73
+#define BFLibraryVersionNumber_1_13_2  74
 
 /**
  * Current Bugfender version number.
@@ -89,7 +101,7 @@ FOUNDATION_EXPORT double const BFLibraryVersionNumber;
 /** Defines the level of a log */
 typedef NS_ENUM(NSUInteger, BFLogLevel)
 {
-    /** Default/Degug log level */
+    /** Default/Debug log level */
     BFLogLevelDefault       = 0,
     /** Warning log level */
     BFLogLevelWarning       = 1,
@@ -164,7 +176,8 @@ typedef NS_ENUM(NSUInteger, BFLogLevel)
 
 /**
  * Set the maximum space available to store local logs. This value is represented in bytes. There's a limit of 50 MB.
- * @param maximumLocalStorageSize Maximum space availalbe to store local logs, in bytes.
+ * @param maximumLocalStorageSize Maximum size in bytes. Range accepted is from 1 MB to 50 MB. If the value provider
+ * is below this range it will be set to 1 MB, if is above the range it will be set to 50 MB
  **/
 + (void)setMaximumLocalStorageSize:(NSUInteger)maximumLocalStorageSize;
 
@@ -237,6 +250,13 @@ typedef NS_ENUM(NSUInteger, BFLogLevel)
  * Logs all actions performed and screen changes in the application, such as button touches, swipes and gestures.
  */
 +(void)enableUIEventLogging;
+
+/**
+ * Logs all actions performed and screen changes in the application, such as button touches, swipes and gestures.
+ * @param ignoredViewsTags Tags of views that should not be observed and logged by Bugfender
+ */
++ (void)enableUIEventLoggingWithIgnoredViewsTags:(NSArray<NSNumber *> *)ignoredViewsTags;
+
 #endif
 
 /**
@@ -249,11 +269,11 @@ typedef NS_ENUM(NSUInteger, BFLogLevel)
  ** ******************************************************************** **/
 
 /**
- * Sets the name for the device. If the Device Name is not set, then the  iOS standard device name will be automatically sent
+ * Sets the name for the device. If the Device Name is not set, then the iOS standard device name will be automatically sent
  * @note This method has to be called prior to activate logger. Otherwise, an exception will be thrown.
- * @param deviceName Device name that will be .
+ * @param deviceName Device name that will be shown in the Dashboard.
  */
-+(void)overrideDeviceName:(NSString *)deviceName;
++(void)overrideDeviceName:(NSString *)deviceName __deprecated_msg("Use setDeviceString:forKey: instead, which allows to change the name once set. This function will be removed in a future version.");
 
 /**
  * Sets a device detail with boolean type.
@@ -406,6 +426,17 @@ typedef NS_ENUM(NSUInteger, BFLogLevel)
  @return URL linking to Bugfender
  */
 + (nullable NSURL *)sendUserFeedbackReturningUrlWithSubject:(NSString *)subject message:(NSString *)message;
+
+/**
+ * Logs all logs written via NSLog or OSLog.
+ */
++ (void)enableNSLogLogging API_AVAILABLE(macos(10.15), ios(15.0), tvos(15.0), watchos(8.0));
+
+/**
+ * Logs all logs written via NSLog or OSLog.
+ * @param interceptor intercept the logs and allow to modify or to block them before they are sent to Bugfender
+ */
++ (void)enableNSLogLoggingWithInterceptor:(id <BFLogInterceptor>)interceptor API_AVAILABLE(macos(10.15), ios(15.0), tvos(15.0), watchos(8.0)) NS_SWIFT_NAME(enableNSLogLogging(withInterceptor:));
 
 @end
 
