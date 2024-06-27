@@ -490,7 +490,7 @@
 		F4082B45873A2CE67E16CE28133322B4 /* TRCConnectionNSURLSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A405148C339306D604839D1524E94C /* TRCConnectionNSURLSession.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F4D98E2566F9466E7BD2B181865195E1 /* UITabBar+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9E233ADA555A1A5E38DB3C26ADE206E /* UITabBar+Rx.swift */; };
 		F58FBAB92AF265A9C2191B6CD5FE855F /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D473F2D7A212F7515962E7117F6501 /* Cancelable.swift */; };
-		F6440F9C4AE8A246BBF3E10F9DD66DD0 /* ReachabilitySwift-ReachabilitySwift in Resources */ = {isa = PBXBuildFile; fileRef = 842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift-ReachabilitySwift */; };
+		F6440F9C4AE8A246BBF3E10F9DD66DD0 /* ReachabilitySwift.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift.bundle */; };
 		F651EA71E036BE765858ED62D59E12DF /* TRCValueTransformerUrl.h in Headers */ = {isa = PBXBuildFile; fileRef = EB1F283A7D137AC7B40AC1F3F55051B4 /* TRCValueTransformerUrl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6EED1B3AEF70278A0259316948C2605 /* TRCSerializerHttpQuery.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E0D8A3776AE344CE9C3F4EEF639D417 /* TRCSerializerHttpQuery.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F718C98ABCEC593D7D5E86C9BB5A542F /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64972952BB16FE2934FA818531B555E4 /* AtomicInt.swift */; };
@@ -1028,7 +1028,7 @@
 		809C5FAB588354C9BA37DC3EAB8CB45C /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8140DCBC866116CD65532EFC9DF40065 /* IdentifiableType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IdentifiableType.swift; path = Sources/Differentiator/IdentifiableType.swift; sourceTree = "<group>"; };
 		8368826BB8A630E2DE47BD7BFDDA77D7 /* RxSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RxSwift.modulemap; sourceTree = "<group>"; };
-		842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift-ReachabilitySwift */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "ReachabilitySwift-ReachabilitySwift"; path = ReachabilitySwift.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReachabilitySwift.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8435F1935EE4ECFF99DC62F67C5FE7A2 /* RxBiBinding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = RxBiBinding.release.xcconfig; sourceTree = "<group>"; };
 		8464DF14361766A9E158A6E361BF2886 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		84777EAC8278415B587300BD6871F6B8 /* Changeset.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Changeset.swift; path = Sources/Differentiator/Changeset.swift; sourceTree = "<group>"; };
@@ -1826,7 +1826,7 @@
 				ED1270741C218946228312A515AE7B71 /* Pods_NightwavePlazaTests.framework */,
 				E4E7B3DD46ABB0DBBB56BD5AE90E4911 /* PureLayout.framework */,
 				21B03CA622E690725A6626C088E1D09F /* Reachability.framework */,
-				842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift-ReachabilitySwift */,
+				842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift.bundle */,
 				4005ABC7BB37369704B0AA352EE75B19 /* RxBiBinding.framework */,
 				BC432FD48A5932251F1CAFBC4BF74894 /* RxCocoa.framework */,
 				692F92D73EC27270EA9CC9575C3E65B6 /* RxDataSources.framework */,
@@ -2772,7 +2772,7 @@
 			);
 			name = "ReachabilitySwift-ReachabilitySwift";
 			productName = ReachabilitySwift;
-			productReference = 842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift-ReachabilitySwift */;
+			productReference = 842AED998605C42F2C05F53985DA2DF5 /* ReachabilitySwift.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */ = {
@@ -3252,7 +3252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6440F9C4AE8A246BBF3E10F9DD66DD0 /* ReachabilitySwift-ReachabilitySwift in Resources */,
+				F6440F9C4AE8A246BBF3E10F9DD66DD0 /* ReachabilitySwift.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4078,7 +4078,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5345,7 +5345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
