@@ -92,14 +92,46 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         #else
         resourcesPath = Bundle.main.bundlePath as NSString
         #endif
-
-        let webPath = resourcesPath.appendingPathComponent("web");
-        let indexPath = (webPath as NSString).appendingPathComponent("index.html");
         
-        let indexContent = try! NSString(contentsOfFile: indexPath, encoding: String.Encoding.utf8.rawValue);
+        RestClient.shared.restClient.send(RequestToCheckForUpdate()) { [unowned self] (result, error) in
+            do
+            {
+                let data = try JSONSerialization.data(withJSONObject: result!)
+                let decoder = JSONDecoder()
+                let viewVersion = try decoder.decode(ViewVersion.self, from: data)
+
+                var currentVersion: ViewVersion
+                if let data = UserDefaults.standard.data(forKey: "viewVersion") {
+                    currentVersion = try JSONDecoder().decode(ViewVersion.self, from: data)
+                } else {
+                    // if there's nothing stored in UserDefaults, use the version from the api
+                    currentVersion = viewVersion
+                }
+                
+                if viewVersion.version != currentVersion.version {
+                    let url = URL(string: viewVersion.source)!
+                    webView.load(URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData))
+                    try! UserDefaults.standard.set(JSONEncoder().encode(viewVersion), forKey: "viewVersion")
+                } else {
+                    let url = URL(string: currentVersion.source)!
+                    //webView.loadFileURL(<#T##URL: URL##URL#>, allowingReadAccessTo: <#T##URL#>)
+                    webView.load(URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad))
+                    try! UserDefaults.standard.set(JSONEncoder().encode(viewVersion), forKey: "viewVersion")
+                }
+                
+                webView.navigationDelegate = self
+            } catch {  }
+        }
+        
+        
+
+        //let webPath = resourcesPath.appendingPathComponent("web");
+        //let indexPath = (webPath as NSString).appendingPathComponent("index.html");
+        
+        //let indexContent = try! NSString(contentsOfFile: indexPath, encoding: String.Encoding.utf8.rawValue);
  
-        webView.loadHTMLString(indexContent as String, baseURL: URL(fileURLWithPath: webPath));
-        webView.navigationDelegate = self
+        //webView.loadHTMLString(indexContent as String, baseURL: URL(fileURLWithPath: webPath));
+        
         
         
     }
@@ -166,7 +198,7 @@ class WebViewController: UIViewController, WKNavigationDelegate {
                 self.present(error, animated: true, completion: nil)
             }
             decisionHandler(.cancel)
-        } else if let url = navigationAction.request.url, url.scheme?.hasPrefix("http") == true {
+        } else if let url = navigationAction.request.url, url.scheme?.hasPrefix("http://") == true {
             let controller = SFSafariViewController(url: url)
             self.present(controller, animated: true, completion: nil)
             

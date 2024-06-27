@@ -68,7 +68,6 @@ class MainViewController: UIViewController {
     }
     
     private func updateBg() {
-        
         let bgObj = self.backgrounds[self.currentBg];
         
         let url = URL(string: bgObj["video_src"]! )!;
